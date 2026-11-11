@@ -28,16 +28,32 @@ Mario running and jumping through the opening course, every frame drawn by the r
 | Reached | Title screen, the A/B/C save-file pipes, the opening course: scrolling, enemies, the HUD and timer |
 | Not yet checked | A full playthrough, battery saves surviving a restart, audio against the original |
 
-## Building
+## Getting started
 
-### What you need
+You need the ROM, dumped from your own cartridge. Tested with
+`Super Mario Land 2 - 6 Golden Coins.gb`, SHA-1 `bba408539ecbf8d322324956d859bc86e2a9977b`.
 
-- **Windows 11**: Visual Studio 2022 Build Tools (C++), CMake 3.20 or newer,
-  SDL2 from [vcpkg](https://github.com/microsoft/vcpkg) (`vcpkg install sdl2:x64-windows`).
-- **The ROM**, dumped from your own cartridge, in `roms/`. Tested with:
-  `Super Mario Land 2 - 6 Golden Coins.gb`, SHA-1 `bba408539ecbf8d322324956d859bc86e2a9977b`.
+### Quick start
 
-### Build
+1. Download this repo: **Code → Download ZIP**, and unzip it anywhere.
+2. Windows: double-click **`Setup.cmd`**. Linux and macOS: `./setup.sh`.
+3. Answer its questions. It installs the compiler if it's missing (it asks
+   first: MSYS2 on Windows, your package manager on Linux and macOS), looks for
+   your ROM in `roms/`, Downloads, Desktop and Documents (or asks for the
+   path), recompiles it, and builds the game. The first build takes a few
+   minutes.
+4. Windows: double-click **Super Mario Land 2 (recomp)** in the folder.
+   Linux and macOS: `./build/rom`.
+
+If it stops, it prints one line saying what to do, and the details are in
+`setup.log`. Rerun it after fixing that; finished steps are skipped. To run it
+without questions: `tools\setup.ps1 -Yes -Game <folder or file>` on Windows,
+`./setup.sh --yes <file>` elsewhere.
+
+### Step by step (Visual Studio)
+
+With Visual Studio 2022 Build Tools (C++), CMake 3.21 or newer and SDL2 from
+[vcpkg](https://github.com/microsoft/vcpkg) (`vcpkg install sdl2:x64-windows`):
 
 ```bash
 git clone --recurse-submodules https://github.com/sp00nznet/supermarioland2-recomp.git
@@ -75,6 +91,7 @@ works too, and the menu bar has settings, scaling, palettes and save states.
 
 | Path | What it is |
 |---|---|
+| `Setup.cmd`, `setup.sh` | Quick start for Windows (runs `tools/setup.ps1`) and for Linux and macOS |
 | `rom_main.c` | Entry point: DMG boot, the SDL window, the frame loop |
 | `CMakeLists.txt` | Builds the runtime from `gbrecomp/` and the game from `generated/` |
 | `gbrecomp/` | [gb-recompiled](https://github.com/sp00nznet/gb-recompiled) (submodule): recompiler and runtime |
